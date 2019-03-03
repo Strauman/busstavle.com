@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135044971-1"></script>
+  <script type="text/javascript" src="assets/js/cookiehandler.js"></script>
+  <script>
+    var base_url_match = window.location.href.match(/^(https?:\/\/)?([^\/:]+)/)
+      var host_name=base_url_match[2]
+      if (host_name!="localhost" && window.analytics){
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-135044971-1');
+      }
+      else{
+        console.log("Localhost: Excluded from analytics")
+        window.analytics=false;
+      }
+    </script>
+  <script src="assets/js/moment.js" charset="utf-8"></script>
+  <meta charset="utf-8">
+  <meta property="og:title" content="busstavle.com - Online busstavle for Troms fylkestrafikk">
+  <meta property="og:description" content="Velg busstopp og se avganger i sanntid. Du kan også sette på alarm som dinger en brukerbestemt tid før sanntidsavgang.">
+  <title></title>
+  <link rel="stylesheet" href="assets/css/master.css">
+  <meta name="description" content="En sanntid busstavle som oppdateres automatisk for Troms fylkestrafikk." />
+  <script src="assets/js/jquery-3.2.0.min.js" charset="utf-8"></script>
+  <script src="assets/js/maybina.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <div id="updated_time"></div>
+  <div id="container">
+    <div id="body">
+      <div id="stop_name">
+      </div>
+      <div id="alerts">
+      </div>
+      <div id="perm-alerts">
+      </div>
+      <div id="settings" style="display: none;">
+        Tips: instillingene lagres automatisk i URL-en.<br />
+        Du altså kan bokmerke siden og gå til samme instillinger neste gang!
+        <form id="load_deps_form" action="#">
+          <table>
+            <tr>
+              <td>Stoppnavn</td>
+              <td><input type="text" url_setting="stop" class="url_setting" id="input_stop_name" name="" value="UiT" /></td>
+            </tr>
+            <tr>
+              <td>Spor</td>
+              <td><input type="text" url_setting="track" class="url_setting" id="input_track" name="" value="" /></td>
+            </tr>
+            <tr>
+              <td>Spill lyd</td>
+              <td><input type="checkbox" url_setting="sound" class="url_setting" checked="checked" id="do_ding" value="1" /></td>
+            </tr>
+            <tr>
+              <td>Linjer (csv)</td>
+              <td><input type="text" url_setting="lines" class="url_setting" id="input_lines" name="" value="" /></td>
+            </tr>
+            <tr>
+              <td>Ding time</td>
+              <td><input type="text" url_setting="dingtime" id="dingtime" value="05:00" placeholder="mm:ss" value="1" /></td>
+            </tr>
+            <tr>
+              <td>Ikke ding før klokken</td>
+              <td><input type="text" url_setting="dingdelay" id="dingdelay" value="" placeholder="hh:mm" value="1" /></td>
+            </tr>
+          </table>
+          <input type="submit" value="Load departures" id="load_deps">
+        </form>
+      </div>
+      <button type="button" id="settings_toggle">Gjem/vis innstillinger</button>
+      <table id="departure_table" border="0">
+        <thead>
+          <caption>Laster avganger...</caption>
+        </thead>
+      </table>
+    </div>
+    <div id="footer">
+      <footer>Denne siden er en uoffisiell tjeneste, og er <em>ikke</em> levert Troms fylkestrafikk.</footer>
+    </div>
+
+  </div>
+</body>
+
+</html>

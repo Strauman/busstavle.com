@@ -1,0 +1,113 @@
+@font-face{
+ font-family:'digital-clock-font';
+ src: url('/assets/fonts/digital-7/mono.ttf');
+}
+html,body{
+  font-family: Helvetica, Arial, sans-serif;
+  min-height:100%;
+  position: relative;
+}
+#updated_time{
+  display: none;
+}
+#body{
+  /* height of footer+footer.bottom */
+  padding-bottom: 3em;
+}
+/***** FOOTER DESIGN DEBUG HELPERS *****/
+/* #departure_table{
+  z-index:0;
+  min-height:110vh;
+  border: 2px solid black;
+}
+footer{
+  z-index:10;
+}
+#footer{
+  border-top: 1px solid red;
+} */
+/***** END FOOTER DESIGN DEBUG HELPERS *****/
+footer{
+  position: relative;
+  top:0;
+  text-align: center;
+  /* (footer height-Text height)/2 -> excluding footer.bottom */
+  top: .5em;
+}
+#footer {
+   z-index:10;
+   position:absolute;
+   bottom:1em;
+   height: 2em;
+   width:100%;
+   background-color: #B1C8D6;
+}
+
+#container{
+  min-height:100vh;
+  display: block;
+  position: relative;
+  padding-bottom: 0;
+}
+.timefont{
+  font-family:'digital-clock-font'
+}
+.serif{
+  font-family: 'serif'
+}
+
+#departure_table{
+  width:100%;
+}
+#stop_name{
+  width:100%;
+  font-size: 24pt;
+  text-align: center;
+}
+table {
+    border: 1px solid #CCC;
+    border-collapse: collapse;
+}
+
+#departure_table tr{
+  text-align: center;
+  vertical-align: middle;
+  margin: 0;
+  padding: 1em;
+  font-size: 24pt;
+}
+tr.mainRow{
+  border-top: 1px solid black;
+}
+.notecell{
+  border: none;
+  text-align: left;
+  font-size: 14pt;
+}
+#departure_table tr.even{
+  background: #A7C8E4;
+}
+#departure_table tr.odd{
+  background: #FFDF8E;
+}
+#departure_table tr.notlive{
+  background: #CCC;
+}
+.ding{
+  background: #E98B8B;
+}
+#alerts{
+  position:relative;
+  width: 50%;
+  left: 25%;
+}
+.alert-fatal{
+  background: #E98B8B;
+  border-radius: 10px;
+  padding:1em;
+  text-align: center;
+  margin-bottom:.5em;
+}
+.small{
+  font-size: 12pt;
+}
