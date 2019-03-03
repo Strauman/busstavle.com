@@ -7,7 +7,9 @@ $(function() {
   var base_url = base_url_protocol + base_url_host
 
   var last_update = moment(); // Last time successfully updated from server. Gonna assume we did now to give it time.
-  var sinatra_url = base_url + ":4576" // Sinatra URL to fix CORS problems
+  // var sinatra_url = base_url + ":4576" // Sinatra URL to fix CORS problems
+  // Temporary setup to access remote server locally
+  var sinatra_url = "https://www.busstavle.com" + ":4576" // Sinatra URL to fix CORS problems
   var departure_list_url = sinatra_url + "/departurelist"
   var datetime_format = "DD.MM.YYYY HH:mm:ss" //Format for date-times
   var time_format = "HH:mm:ss" //Format for time only

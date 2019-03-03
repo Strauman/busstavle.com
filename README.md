@@ -1,0 +1,1 @@
+Main javascript file is [www/assets/js/maybina.js](https://github.com/Strauman/busstavle.com/tree/master/www/assets/js/maybina.js), css file is [www/assets/css/master.css](https://github.com/Strauman/busstavle.com/tree/master/www/assets/css/master.css) and index in [www/index.html](https://github.com/Strauman/busstavle.com/tree/master/www/index.html)
