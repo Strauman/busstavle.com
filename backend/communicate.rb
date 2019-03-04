@@ -9,7 +9,22 @@ Bundler.require(:default)
 Bundler.require(:development) if development?
 # Bind to all addresses
 set :bind, '0.0.0.0'
-# TODO: move config to file
+
+###############################################################################################################
+###############################################################################################################
+##  # Might not work on server with monit, so not activated yet                                              ##
+##  # Load config                                                                                            ##
+##  # Checks first if the file exists, (with added .yaml). If not,                                           ##
+##  # it tries to load the .sample.yaml file.                                                                ##
+##  # Config from file.                                                                                      ##
+##  config_filename = communicate-config                                                                     ##
+##  config_filename = File.file?("#{config_filename}.yaml") ? config_filename : "#{config_filename}.sample"  ##
+##  config = YAML.load_file("#{config_filename}.yaml")                                                       ##
+##  # Convert config keys to symbols                                                                         ##
+##  config = config.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}                                        ##
+###############################################################################################################
+###############################################################################################################
+
 config = { allowed_cross_origins: ['localhost.int', 'busstavle.com', 'genistrek.com'] }
 # Cookies aren't working as expected. Yet.
 set(:cookie_options) do

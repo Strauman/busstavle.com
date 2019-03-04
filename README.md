@@ -1,12 +1,15 @@
 Main javascript file is [www/assets/js/maybina.js](https://github.com/Strauman/busstavle.com/tree/master/www/assets/js/maybina.js), css file is [www/assets/css/master.css](https://github.com/Strauman/busstavle.com/tree/master/www/assets/css/master.css) and index in [www/index.html](https://github.com/Strauman/busstavle.com/tree/master/www/index.html).
 
-There is a ruby server in between the javascript and tromskortet. This script is running on [https://www.busstavle.com:4576/departurelist](https://www.busstavle.com:4576/departurelist) (NB: the root path (`busstavle.com:4576/`) just goes back to this repo atm.) using sinatra.
+There is a script that is running on [https://www.busstavle.com:4576/departurelist](https://www.busstavle.com:4576/departurelist). It allows cross origin to localhost for easier development. (NB: the root path (`busstavle.com:4576/`) just goes back to this repo atm.) using sinatra.
 I'll published it when I've finished cleaning the code and such.
 
 Git directory structure
 ```
 Git root
 ├─ README.md
+├─ backend
+│  ├─ Gemfile
+│  └─ communicate.rb
 └─ www
    ├─ assets
    │  ├─ css/master.css

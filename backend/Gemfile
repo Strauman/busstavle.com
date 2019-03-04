@@ -1,14 +1,11 @@
 
 source 'https://rubygems.org' do
-  gem 'sinatra', :require => ['sinatra','sinatra/reloader','sinatra/cookies']
+  gem 'sinatra', :require => ['sinatra','sinatra/reloader']
   gem 'sinatra-contrib'
-  # gem 'xml-to-json'
-  # gem 'json', "1.8.6"
   gem 'crack'
-  # gem 'json'
-  require 'open-uri'
   group :development do
-    # require 'sinatra/reloader'
+    require 'sinatra/reloader'
   end
+  require 'open-uri'
   require 'pp'
 end
