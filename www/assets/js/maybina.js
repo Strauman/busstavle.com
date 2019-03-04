@@ -7,9 +7,9 @@ $(function() {
   var base_url = base_url_protocol + base_url_host
 
   var last_update = moment(); // Last time successfully updated from server. Gonna assume we did now to give it time.
-  // var sinatra_url = base_url + ":4576" // Sinatra URL to fix CORS problems
+  var sinatra_url = base_url + ":4576" // Sinatra URL to fix CORS problems
   // Temporary setup to access remote server locally
-  var sinatra_url = "https://www.busstavle.com" + ":4576" // Sinatra URL to fix CORS problems
+  // var sinatra_url = "https://www.busstavle.com" + ":4576" // Sinatra URL to fix CORS problems
   var departure_list_url = sinatra_url + "/departurelist"
   var datetime_format = "DD.MM.YYYY HH:mm:ss" //Format for date-times
   var time_format = "HH:mm:ss" //Format for time only
@@ -19,9 +19,28 @@ $(function() {
   var page_refresh_interval = 3600000; // Refresh page once an hour for sanity
   var assert_server_update_frequency = 5000; // How often to check whether a successfull update from the server has happend
   var assert_server_update_tolerance = 2 * server_update_frequency + 1000; // How long we tolerate not having a successful update before we contact the user
+  // End config vars.
 
 
-  function add_warning(html, el_id) {
+  var page_is_ready = false;
+  // These callbacks will be done right after the first successful
+  // update has been done to the server
+  var page_ready_callbacks = [];
+  function $make_div(options) {
+    var opts={
+      class: '',
+      id: ''
+    }
+    $.extend(opts, options)
+    // Makes and returns a div jQuery object
+    var $div = $("<div></div>")
+    $div.addClass(opts['class'])
+    if (opts['id']){
+      $div.attr("id", opts['id'])
+    }
+    return $div
+  }
+  function add_warning(html, el_id, alert_type="fatal", do_slide=true) {
     // Add warning to top of page
     // Don't add a warning if it already exists
     var sel = "#" + el_id
@@ -29,12 +48,14 @@ $(function() {
       return;
     }
     var $warning = $("<div></div>");
-    $warning.addClass("alert alert-fatal'");
+    $warning.addClass("alert alert-"+alert_type);
     $warning.prop("id", el_id)
     $warning.html(html);
     $warning.slideUp(0);
     $("#alerts").append($warning);
-    $warning.slideDown();
+    if (do_slide){
+        $warning.slideDown();
+    }
     return $warning;
   }
 
@@ -63,6 +84,32 @@ $(function() {
     })
   }
 
+  // Show and hide the (temporary) update reminder
+  var show_temporary_update_reminder = function() {
+    var contribute_link="<a href='https://github.com/Strauman/busstavle.com/issues'>her</a>"
+    update_reminder_html="Siden er under utvikling. Husk å sjekke denne siden etter oppdateringer av og til dersom den ikke akkurat nå har det du trenger :)<br/>Har du idéer eller tilbakemelding, klikk "+contribute_link
+    // update_reminder_html="Vi jobber enda med utvikling.<br/>Dersom du har idéer eller tilbakemelding til siden, klikk "+contribute_link
+    add_warning(update_reminder_html,"UpdateReminder","success")
+    // Wait and then hide it
+    window.setTimeout(
+      function() {
+        remove_warning("UpdateReminder")
+      }, 10000);
+  }
+  // Don't know if message should be shown or not. Hiding for now.
+  // page_ready_callbacks.push(show_temporary_update_reminder)
+
+  // Make feedback link
+  var show_feedback_link = function(){
+    // Also make a link in the bottom right corner of the screen
+    var $feedback_div=$make_div({id: "feedback"})
+    var feedback_link="<a class='button-big' target='_blank' href='https://github.com/Strauman/busstavle.com/issues'>Tilbakemelding / idéer</a>"
+    $feedback_div.fadeOut(0);
+    $feedback_div.html(feedback_link)
+    $("body").append($feedback_div)
+    $feedback_div.fadeIn(300);
+  }
+  page_ready_callbacks.push(show_feedback_link)
   window.setInterval(function() {
     // Check that we get regular, successful updates from the server
     // or give user a warning so the user won't miss a bus departure.
@@ -257,14 +304,7 @@ $(function() {
   <tbody>
   </tbody></table>`
 
-  function $make_div(opts) {
-    // Makes and returns a div jQuery object
-    var $div = $("<div></div>")
-    if (opts['class']) {
-      $div.addClass(opts['class'])
-    }
-    return $div
-  }
+
 
   $("[url_setting]").each(function() {
     $(this).change(function() {
@@ -433,6 +473,17 @@ $(function() {
         // Update the last_update variable to contain now.
         last_update = moment();
         remove_warning("timeout_warning");
+        // If this is the very first update, then we should call the ready callbacks
+        if (!page_is_ready) {
+          page_is_ready = true;
+          for (i in page_ready_callbacks) {
+            if (typeof page_ready_callbacks[i] === 'function') {
+              page_ready_callbacks[i].apply([])
+            }
+          }
+          // Reset the callbacks
+          page_ready_callbacks = []
+        }
       }
     });
 
